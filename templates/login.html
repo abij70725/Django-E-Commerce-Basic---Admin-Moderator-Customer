@@ -1,0 +1,53 @@
+{% include 'header.html' %}
+
+
+<div class="footer_container">
+  <!-- info section -->
+
+  <section class="info_section ">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 col-lg-6 ">
+          <h4>
+            Customer registration
+          </h4>
+          <form action="\public_reg" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter Name" required name="name"/>
+            <input type="number" placeholder="Enter Age" required name="age"/>
+            <input type="email" placeholder="Enter E-mail" required name="email"/>
+            <input type="number" placeholder="Enter Phone Number" required name="phone"/>
+            <input type="password" placeholder="Enter Password" required name="password"/>
+            <button type="submit">
+              Register
+            </button>
+          </form>
+        </div>
+
+        <div class="col-md-6 col-lg-6 ">
+          <h4>
+            Login
+          </h4>
+          <form action="\log_in" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter Your E-mail" required name="email"/>
+            <input type="password" placeholder="Enter Password" required name="password"/>
+            <button type="submit">
+              Login
+            </button>
+          </form>
+        </div>
+
+        
+        
+      </div>
+    </div>
+  </section>
+
+    <!-- end info section -->
+
+
+
+
+{% include 'foot.html' %}

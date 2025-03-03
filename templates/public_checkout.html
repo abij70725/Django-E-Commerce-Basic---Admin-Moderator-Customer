@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #7335b7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .payment-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        .payment-container h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .input-group {
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #777;
+            transition: 0.3s;
+            pointer-events: none;
+            background: white;
+            padding: 0 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: 5px;
+            font-size: 12px;
+            color: #007bff;
+        }
+
+        .card-details {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .pay-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-container">
+        <h2>Payment Details</h2>
+        <form action="" method="post">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="text" required id="amount" value="{{ request.GET.total }}" readonly>
+            <label for="cardNumber">Amount</label>
+            <div class="error" id="cardError">Enter a valid card number</div>
+        </div>
+        <div class="input-group">
+            <input type="text" required id="cardNumber" placeholder=" " maxlength="19">
+            <label for="cardNumber">Card Number</label>
+            <div class="error" id="cardError">Enter a valid card number</div>
+        </div>
+
+        <div class="input-group">
+            <input type="text" required id="cardHolder" placeholder=" ">
+            <label for="cardHolder">Cardholder Name</label>
+        </div>
+
+        <div class="card-details">
+            <div class="input-group">
+                <input type="text" required id="expiryDate" placeholder=" " maxlength="5">
+                <label for="expiryDate">MM/YY</label>
+            </div>
+            <div class="input-group">
+                <input type="text" required id="cvv" placeholder=" " maxlength="3">
+                <label for="cvv">CVV</label>
+            </div>
+        </div>
+
+        <button class="pay-btn" onclick="validatePayment()">Pay Now</button>
+    </form>
+    </div>
+
+    <script>
+        document.getElementById("cardNumber").addEventListener("input", function (e) {
+            let value = e.target.value.replace(/\D/g, ""); 
+            value = value.replace(/(\d{4})/g, "$1 ").trim(); 
+            e.target.value = value;
+        });
+
+        document.getElementById("expiryDate").addEventListener("input", function (e) {
+            let value = e.target.value.replace(/\D/g, ""); 
+            if (value.length > 2) {
+                value = value.slice(0, 2) + "/" + value.slice(2);
+            }
+            e.target.value = value;
+        });
+
+        function validatePayment() {
+            let cardNumber = document.getElementById("cardNumber").value.replace(/\s/g, "");
+            let expiryDate = document.getElementById("expiryDate").value;
+            let cvv = document.getElementById("cvv").value;
+            let cardError = document.getElementById("cardError");
+
+            if (cardNumber.length < 16) {
+                cardError.style.display = "block";
+            } else {
+                cardError.style.display = "none";
+            }
+        }
+    </script>
+{% for m in messages %}
+    <script>
+        alert("{{m}}");
+    </script>
+{% endfor %}
+</body>
+</html>

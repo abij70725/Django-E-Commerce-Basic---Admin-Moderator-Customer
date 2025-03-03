@@ -1,0 +1,73 @@
+{% include 'header.html' %}
+
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url(../static/assets/img/page-title-bg.jpg);">
+        <div class="container position-relative">
+            <div class="section-title">
+                <h2>Works</h2>
+
+            </div>  
+
+          <nav class="breadcrumbs">
+            <ol>
+              <li><a href="\admin_home">Home</a></li>
+              <li class="current">Contact</li>
+            </ol>
+          </nav>
+        </div>
+      </div><!-- End Page Title -->
+  
+    <!-- Services Section -->
+    <section id="services" class="services section light-background">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Assigned</h2>
+          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        </div><!-- End Section Title -->
+  
+        <div class="container">
+  
+          <div class="row gy-4">
+  
+            {% for work in works %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+              <div class="service-item  position-relative">
+                <div class="icon">
+                  <i class="fa-solid fa-mountain-city"></i>
+                </div>
+                <h3>{{work.customer_request.user.name}}</h3>
+                <h6>Work : {{work.customer_request.request}}</h6>
+                <p>
+                    Contact : {{work.customer_request.user.email}} / {{work.customer_request.user.phone}}<br>
+                    Address : {{work.customer_request.user.address}} <br>
+                    City : {{work.customer_request.user.city}} <br>
+                    Zip : {{work.customer_request.user.zip}} <br>
+                    State : {{work.customer_request.user.state}} <br>
+                    {{work.customer_request.work.customer_request_date}} <br><br>
+                </p>
+                {% if work.work_status == 0 %}
+                    <a href="worker_mark_completed?id={{work.id}}" class="readmore text-success">Mark as completed <i class="bi bi-arrow-right"></i></a>
+                {% elif work.work_status == 1 %}
+                    <span class="text-success h5">Completed</span><br>
+                    <span class="text-info h6">Payment :
+                        {% if work.payment_status == 0 %}
+                            Pending
+                        {% elif work.payment_status == 1 %}
+                            Done
+                        {% endif %}
+                    </span>
+                {% endif %}
+              </div>
+            </div><!-- End Service Item -->
+            {% endfor %}
+  
+          </div>
+  
+        </div>
+  
+      </section><!-- /Services Section -->
+  
+      
+{% include 'foot.html' %}

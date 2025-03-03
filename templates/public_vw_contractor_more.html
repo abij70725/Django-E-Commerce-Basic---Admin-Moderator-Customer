@@ -1,0 +1,112 @@
+{% include 'header.html' %}
+
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url(../static/assets/img/page-title-bg.jpg);">
+        <div class="container position-relative">
+            <div class="section-title">
+                <h2>View contractor</h2>
+
+            </div>  
+
+          <nav class="breadcrumbs">
+            <ol>
+              <li><a href="\admin_home">Home</a></li>
+              <li class="current">Contact</li>
+            </ol>
+          </nav>
+        </div>
+      </div><!-- End Page Title -->
+  
+    <!-- Get Started Section -->
+    <section id="get-started" class="get-started section">
+
+        <div class="container">
+  
+          <div class="row justify-content-between gy-4">
+  
+            <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="100">
+              <div class="content">
+                <h3>{{contractor.name}} - {{contractor.city}}/{{contractor.state}}</h3>
+                <p>{{contractor.address}} <br>
+                    {{contractor.city}} <br>
+                    {{contractor.zip}} <br>
+                    {{contractor.state}} <br>
+                    Email: {{contractor.email}} <br>
+                    Phone: {{contractor.phone}} <br>
+                </p>
+              </div>
+            </div>
+  
+            <div class="col-lg-5" data-aos="zoom-out" data-aos-delay="200">
+              <form method="post" class="php-email-form">
+                {% csrf_token %}
+                <h3>Get a quotation</h3>
+                <p>send the details of work and the amount you offer.</p>
+                <div class="row gy-3">
+  
+                  <div class="col-12">
+                    <textarea class="form-control" name="request" rows="6" placeholder="Work descriprion" required=""></textarea>
+                  </div>
+                  <div class="col-12">
+                    <input type="number" class="form-control" name="amount" placeholder="Amount you offer" required="" min="0">
+                  </div>
+  
+                  <div class="col-12 text-center">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your quote request has been sent successfully. Thank you!</div>
+  
+                    <button type="submit">Send</button>
+                  </div>
+  
+                </div>
+              </form>
+            </div><!-- End Quote Form -->
+  
+          </div>
+  
+        </div>
+  
+      </section><!-- /Get Started Section -->
+
+
+      <!-- Team Section -->
+    <section id="team" class="team section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Workers</h2>
+          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        </div><!-- End Section Title -->
+  
+        <div class="container">
+  
+          <div class="row gy-5">
+  
+            {% for worker in workers %}
+            <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
+              <div class="member-img">
+                <img src="../static/assets/img/worker.jpeg" class="img-fluid" alt="">
+                <!-- <div class="social">
+                  <a href="#"><i class="bi bi-twitter-x"></i></a>
+                  <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="#"><i class="bi bi-instagram"></i></a>
+                  <a href="#"><i class="bi bi-linkedin"></i></a>
+                </div> -->
+              </div>
+              <div class="member-info text-center">
+                <h4>{{worker.name}}</h4>
+                <span>{{worker.state}}</span>
+              </div>
+            </div><!-- End Team Member -->
+            {% endfor %}
+  
+          </div>
+  
+        </div>
+  
+      </section><!-- /Team Section -->
+  
+      
+{% include 'foot.html' %}

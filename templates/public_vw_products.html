@@ -1,0 +1,54 @@
+{% include 'header.html' %}
+<!-- </div> -->
+
+<!-- service section -->
+<section class="service_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          Products
+        </h2>
+        <p>
+          consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+      </div>
+      <div class="row">
+        {% for product in products %}
+        <div class="col-md-6 col-lg-3">
+          <div class="box">
+            <div class="img-box">
+              <img src="../static{{product.image.url}}" alt="">
+            </div>
+            <div class="detail-box newform">
+              <h5>
+                {{product.name}}
+              </h5>
+              <p>
+                {{product.description}} <br>
+                Rs. {{product.price}} <br>
+                Stock : {{product.stock}}
+              </p>
+              <form action="\public_add_cart" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{product.id}}">
+                <input type="number" name="quantity" placeholder="Enter Quantity" max="{{product.stock}}" required>
+                <button type="submit" class="btn btn-outline-success">
+                  Add to cart
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+        <!-- <div class="btn-box">
+          <a href="">
+            View More
+          </a>
+        </div> -->
+    </div>
+  </section>
+  <!-- end service section -->
+  
+
+  {% include 'foot.html' %}

@@ -1,0 +1,69 @@
+{% include 'header.html' %}
+
+
+<div class="footer_container">
+  <!-- info section -->
+
+  <section class="info_section ">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 col-lg-4 ">
+          <h4>
+            Add moderator
+          </h4>
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter Name" required name="name"/>
+            <input type="text" placeholder="Enter Place" required name="place"/>
+            <input type="email" placeholder="Enter E-mail" required name="email"/>
+            <input type="number" placeholder="Enter Phone Number" required name="phone"/>
+            <input type="password" placeholder="Enter Password" required name="password"/>
+            <button type="submit">
+              Add
+            </button>
+          </form>
+        </div>
+
+
+        <div class="col-md-6 col-lg-8 ">
+          <h4>
+            My moderators
+          </h4>
+          <table class="table table-striped table-bordered table-hover text-center">
+            <tr>
+              <th>Name</th>
+              <th>Place</th>
+              <th>E-mail</th>
+              <th>Phone</th>
+              <th>Block</th>
+            </tr>
+            {% for moderator in moderators %}
+            <tr>
+              <td>{{moderator.name}}</td>
+              <td>{{moderator.place}}</td>
+              <td>{{moderator.email}}</td>
+              <td>{{moderator.phone}}</td>
+              {% if moderator.user.is_active %}
+              <td><a href="\block_moderator?id={{moderator.user.id}}" class="btn btn-outline-danger rounded-pill">Block</a></td>
+              {% else %}
+              <td><a href="\unblock_moderator?id={{moderator.user.id}}" class="btn btn-outline-success rounded-pill">Unblock</a></td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+
+
+        
+        
+      </div>
+    </div>
+  </section>
+
+    <!-- end info section -->
+
+
+
+
+{% include 'foot.html' %}

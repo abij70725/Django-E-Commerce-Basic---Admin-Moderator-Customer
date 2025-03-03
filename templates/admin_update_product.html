@@ -1,0 +1,37 @@
+{% include 'header.html' %}
+
+
+<div class="footer_container">
+  <!-- info section -->
+
+  <section class="info_section ">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 col-lg-4 ">
+          <h4>
+            Update products
+          </h4>
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter product Name" required name="name" value="{{product.name}}"/>
+            <textarea name="description" required placeholder="Product description" id="">{{product.description}}</textarea>
+            <input type="number" placeholder="Enter Price" required name="price" value="{{product.price}}"/>
+            <input type="number" placeholder="Enter Quantity" required name="stock" value="{{product.stock}}"/>
+
+            <button type="submit">
+              Update
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+    <!-- end info section -->
+
+
+
+
+{% include 'foot.html' %}

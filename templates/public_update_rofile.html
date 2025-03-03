@@ -1,0 +1,52 @@
+{% include 'header.html' %}
+
+<div class="footer_container">
+  <!-- info section -->
+
+  <section class="info_section ">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 col-lg-6 ">
+          <h4>
+            My profile
+          </h4>
+          <form action="" method="post">
+            {% csrf_token %}
+            <label for="name">Your Name</label>
+            <input type="text" placeholder="Enter Name" id="name" required name="name" value="{{customer.name}}"/>
+            <label for="name">Your Age</label>
+            <input type="number" placeholder="Enter Age" required name="age" value="{{customer.age}}"/>
+            <label for="name">Your E-mail</label>
+            <input type="email" placeholder="Enter E-mail" required name="email" value="{{customer.email}}"/>
+            <label for="name">Your Phone Number</label>
+            <input type="number" placeholder="Enter Phone Number" required name="phone" value="{{customer.phone}}"/>
+            <button type="submit">
+              Update
+            </button>
+          </form>
+        </div>
+        <div class="col-md-6 col-lg-6 ">
+          <h4>
+            My profile - Update password
+          </h4>
+          <form action="\public_change_password" method="post">
+            {% csrf_token %}
+            <input type="password" placeholder="Enter Your New Password" id="name" required name="password" value=""/>
+            <button type="submit">
+              Update
+            </button>
+          </form>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+    <!-- end info section -->
+
+
+
+
+{% include 'foot.html' %}

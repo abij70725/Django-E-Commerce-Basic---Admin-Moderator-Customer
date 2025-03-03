@@ -1,0 +1,111 @@
+{% include 'header.html' %}
+
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url(../static/../static/assets/img/page-title-bg.jpg);">
+        <div class="container position-relative">
+            <div class="section-title">
+                <h2>View request</h2>
+
+            </div>  
+
+          <nav class="breadcrumbs">
+            <ol>
+              <li><a href="\admin_home">Home</a></li>
+              <li class="current">Contact</li>
+            </ol>
+          </nav>
+        </div>
+      </div><!-- End Page Title -->
+  
+    <!-- Get Started Section -->    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-4">
+
+          <!-- Blog Details Section -->
+          <section id="blog-details" class="blog-details section">
+            <div class="container">
+
+              <article class="article">
+
+                <!-- <div class="post-img">
+                  <img src="../static/assets/img/blog/blog-1.jpg" alt="" class="img-fluid">
+                </div>
+                  -->
+                <h2 class="title">{{request.request}}</h2>
+
+                <div class="meta-top">
+                  <ul>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">{{request.user.name}}</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2020-01-01">{{request.request_date}}</time></a></li>
+                  </ul>
+                </div><!-- End meta top -->
+                <div class="content">
+                    <h6>Work : {{request.request}}</h6>
+                    <p>Amount offered : {{request.amount}} <br>
+                        Contact : {{request.user.email}} / {{request.user.phone}}<br>
+                        Address : {{request.user.address}} <br>
+                        City : {{request.user.city}} <br>
+                        Zip : {{request.user.zip}} <br>
+                        State : {{request.user.state}} <br>
+                        {{request.request_date}} <br><br>
+                    </p>
+                    </div>    
+              </article>
+
+            </div>
+          </section><!-- /Blog Details Section -->
+
+
+        </div>
+
+        <div class="col-lg-4 sidebar">
+
+          <div class="widgets-container">
+
+
+            <!-- Recent Posts Widget -->
+            <div class="recent-posts-widget widget-item">
+
+              <h3 class="widget-title text-center">Assigned workers</h3>
+                {% if workers_allocated %}
+              {% for worker in workers_allocated %}
+              <div class="post-item">
+                <img src="../static/assets/img/worker.jpeg" alt="" class="flex-shrink-0">
+                <div>
+                  <h4><a href="blog-details.html">{{worker.worker.name}}</a></h4>
+                  <span>{{worker.worker.city}}</span><br>
+                    {% if worker.work_status == 0 %}
+                    <span class="text-warning h6">Pending</span>
+                    {% elif worker.work_status == 1 %}
+                    <span class="text-success h6">Completed</span>
+                    {% endif %}
+                  
+                </div>
+              </div><!-- End recent post item-->
+                {% endfor %}
+                <div class="text-center">
+                {% if request.payment_status == 0 %}
+                <a href="\public_pay_contractor?id={{request.id}}" class="btn btn-outline-info">Pay </a>
+                {% elif request.payment_status == 1 %}
+                <span class="text-success h6">Paid</span>
+                {% endif %}
+                {% else %}
+                <div class="text-center">
+                <span class="text-danger h6 ">No worker assigned</span>
+                </div>
+                {% endif %}
+            </div>
+            </div><!--/Recent Posts Widget -->
+
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+      
+{% include 'foot.html' %}

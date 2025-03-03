@@ -1,0 +1,53 @@
+{% include 'header.html' %}
+
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url(../static/assets/img/page-title-bg.jpg);">
+        <div class="container position-relative">
+            <div class="section-title">
+                <h2>credits</h2>
+
+            </div>  
+
+          <nav class="breadcrumbs">
+            <ol>
+              <li><a href="\admin_home">Home</a></li>
+              <li class="current">Contact</li>
+            </ol>
+          </nav>
+        </div>
+      </div><!-- End Page Title -->
+  
+    <!-- Blog Posts Section -->
+    <section id="blog-posts" class="blog-posts section">
+
+        <div class="container">
+          <div class="row gy-4">
+            <table class="table table-striped table-hover table-bordered border-warning table-responsive text-center">
+                <tr>
+                    <th>Work</th>
+                    <th>Customer</th>
+                    <th>Address</th>
+                    <th>Allocated date</th>
+                    <th>Payment date</th>
+                    <th>Amount</th>
+                </tr>
+                {% for payment in payments %}
+                <tr>
+                    <td>{{payment.customer_req.request}}</td>
+                    <td>{{payment.customer_req.user.name}}</td>
+                    <td>{{payment.customer_req.user.address}}</td>
+                    <td>{{payment.customer_req.request_date}}</td>
+                    <td>{{payment.payment_date}}</td>
+                    <td>{{payment.amount}}</td>
+
+                </tr>
+                {% endfor %}
+            </table>
+          </div>
+        </div>
+  
+      </section><!-- /Blog Posts Section -->
+  
+      
+{% include 'foot.html' %}

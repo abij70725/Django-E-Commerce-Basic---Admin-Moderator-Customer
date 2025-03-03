@@ -1,0 +1,76 @@
+{% include 'header.html' %}
+
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url(../static/assets/img/page-title-bg.jpg);">
+        <div class="container position-relative">
+            <div class="section-title">
+                <h2>Works requests</h2>
+
+            </div>  
+
+          <nav class="breadcrumbs">
+            <ol>
+              <li><a href="\admin_home">Home</a></li>
+              <li class="current">Contact</li>
+            </ol>
+          </nav>
+        </div>
+      </div><!-- End Page Title -->
+  
+    <!-- Services Section -->
+    <section id="services" class="services section light-background">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Requests</h2>
+          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        </div><!-- End Section Title -->
+  
+        <div class="container">
+  
+          <div class="row gy-4">
+  
+            {% for request in requests %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+              <div class="service-item  position-relative">
+                <div class="icon">
+                  <i class="fa-solid fa-mountain-city"></i>
+                </div>
+                <h3>{{request.user.name}}</h3>
+                <h6>Work : {{request.request}}</h6>
+                <p>Amount offered : {{request.amount}} <br>
+                    Contact : {{request.user.email}} / {{request.user.phone}}<br>
+                    Address : {{request.user.address}} <br>
+                    City : {{request.user.city}} <br>
+                    Zip : {{request.user.zip}} <br>
+                    State : {{request.user.state}} <br>
+                    {{request.request_date}} <br><br>
+                    {% if request.request_status == 0 %}
+                    <span class="text-warning h5">Pending</span>
+                </p>
+                    <a href="contractor_approve?id={{request.id}}" class="readmore text-success">Approve <i class="bi bi-arrow-right"></i></a>
+                    {% elif request.request_status == 1 %}
+                    <span class="text-success h5">Accepted</span>
+                    <br> <br>
+                    {% if request.payment_status == 0 %}
+                    <span class="text-danger h6">Payment Pending</span>
+                    {% elif request.payment_status == 1 %}
+                    <span class="text-success h6">Payment Done</span>
+                    {% endif %}
+                </p>
+                <a href="Contractor_vw_requests_more?id={{request.id}}" class="readmore text-info">More <i class="bi bi-arrow-right"></i></a>
+                    {% endif %}
+                    <br>
+              </div>
+            </div><!-- End Service Item -->
+            {% endfor %}
+  
+          </div>
+  
+        </div>
+  
+      </section><!-- /Services Section -->
+  
+      
+{% include 'foot.html' %}

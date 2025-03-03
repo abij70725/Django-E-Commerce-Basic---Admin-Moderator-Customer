@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Bill</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #7335b7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .bill-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .bill-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #7335b7;
+            color: white;
+        }
+
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #7335b7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bill-container">
+        <h2>Product Invoice</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="billBody">
+                {% for cart in carts %}
+                <tr>
+                    <td>{{cart.product.name}}</td>
+                    <td>{{cart.quantity}}</td>
+                    <td>{{cart.product.price}}</td>
+                    <td class="item-total">{{cart.total_price}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total">Grand Total: <span id="grandTotal"></span></div>
+
+        <button class="btn" onclick="printInvoice()">Download & Print Invoice</button>
+    </div>
+
+    <script>
+        function calculateTotal() {
+            let total = 0;
+            document.querySelectorAll(".item-total").forEach(item => {
+                total += parseFloat(item.textContent.replace("$", ""));
+            });
+            document.getElementById("grandTotal").textContent = "$" + total.toFixed(2);
+        }
+
+        function printInvoice() {
+            const billContent = document.querySelector(".bill-container").innerHTML;
+            const newWindow = window.open("", "", "width=600,height=600");
+
+            newWindow.document.write("<html><head><title>Invoice</title></head><body>");
+            newWindow.document.write(billContent);
+            newWindow.document.write("</body></html>");
+            newWindow.document.close();
+
+            newWindow.focus();
+            newWindow.print();
+
+            newWindow.onafterprint = function() {
+                newWindow.close();
+                window.location.href = "\public_vw_history"; // Redirect after print
+            };
+
+            newWindow.onbeforeunload = function() {
+                window.location.href = "\public_vw_history"; // Redirect if user cancels
+            };
+        }
+
+        calculateTotal();
+    </script>
+
+</body>
+</html>

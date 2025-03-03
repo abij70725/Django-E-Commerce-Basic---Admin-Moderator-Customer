@@ -1,0 +1,74 @@
+{% include 'header.html' %}
+
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url(../static/assets/img/page-title-bg.jpg);">
+        <div class="container position-relative">
+            <div class="section-title">
+                <h2>View workers</h2>
+
+            </div>  
+
+          <nav class="breadcrumbs">
+            <ol>
+              <li><a href="\admin_home">Home</a></li>
+              <li class="current">Contact</li>
+            </ol>
+          </nav>
+        </div>
+      </div><!-- End Page Title -->
+  
+    <!-- Blog Posts Section -->
+    <section id="blog-posts" class="blog-posts section">
+
+        <div class="container">
+          <div class="row gy-4">
+            {% for worker in workers %}
+  
+            <div class="col-lg-4">
+              <article class="position-relative h-100">
+  
+                <div class="post-content d-flex flex-column">
+  
+                  <h3 class="post-title">{{worker.email}}</h3>
+  
+                  <div class="meta d-flex align-items-center">
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-person"></i> <span class="ps-2">{{worker.name}} </span>
+                    </div>
+                    <span class="px-3 text-black-50">/</span>
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-folder2"></i> <span class="ps-2">{{worker.state}}</span>
+                    </div>
+                  </div>
+  
+                  <p>
+                    Email: {{worker.email}}<br>
+                    Phone: {{worker.phone}}<br>
+                    Address: {{worker.address}}<br>
+                    City: {{worker.city}}<br>
+                    Zip: {{worker.zip}}<br>
+                    State: {{worker.state}}<br>
+                    last login: {{worker.user.last_login}}<br>
+                  </p>
+  
+                  <hr>
+                    {% if worker.user.is_active %}
+                    <a href="\admin_reject?id={{worker.user.id}}&return=worker" class="readmore"><span class="text-danger">Block</span><i class="bi bi-arrow-right"></i></a>
+                    {% else %}
+                    <a href="\admin_approve?id={{worker.user.id}}&return=worker" class="readmore"><span class="text-success">Approve</span><i class="bi bi-arrow-right"></i></a>
+                    {% endif %}
+  
+                </div>
+  
+              </article>
+            </div><!-- End post list item -->
+            {% endfor %}
+  
+          </div>
+        </div>
+  
+      </section><!-- /Blog Posts Section -->
+  
+      
+{% include 'foot.html' %}

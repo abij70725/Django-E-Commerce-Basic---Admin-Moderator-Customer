@@ -1,0 +1,74 @@
+{% include 'header.html' %}
+
+
+<div class="footer_container">
+  <!-- info section -->
+
+  <section class="info_section ">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 col-lg-4 ">
+          <h4>
+            Add products
+          </h4>
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter product Name" required name="name"/>
+            <textarea name="description" required placeholder="Product description" id=""></textarea>
+            <input type="number" placeholder="Enter Price" required name="price"/>
+            <input type="number" placeholder="Enter Quantity" required name="stock"/>
+            <input type="file" placeholder="Enter Image" required name="image"/>
+
+            <button type="submit">
+              Add
+            </button>
+          </form>
+        </div>
+
+
+        <div class="col-md-6 col-lg-8 ">
+          <h4>
+            Products
+          </h4>
+          <table class="table table-striped table-bordered table-hover text-center">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Image</th>
+                <th>Close</th>
+                <th>update</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.price}}</td>
+                {% if product.stock <= 0 %}
+                <td class="text-danger">Out of stock</td>
+                {% else %}
+                <td>{{product.stock}}</td>
+                {% endif %}
+                <td><img src="../static{{product.image.url}}" alt="{{product.image.url}}" width="100px" height="100px"></td>
+                <td><a href="\delete_product?id={{product.id}}" class="btn btn-outline-danger rounded-pill">Close</a></td>
+                <td><a href="\admin_update_product?id={{product.id}}" class="btn btn-outline-success rounded-pill">Update</a></td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+
+
+        
+        
+      </div>
+    </div>
+  </section>
+
+    <!-- end info section -->
+
+
+
+
+{% include 'foot.html' %}

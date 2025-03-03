@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>Digian</title>
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="../static/assets/css/bootstrap.css" />
+
+  <!-- font awesome style -->
+  <link href="../static/assets/css/font-awesome.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="../static/assets/css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="../static/assets/css/responsive.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <span>
+              Online shopping platform
+            </span>
+          </a>
+  
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+  
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            {% if user.is_authenticated %}
+              {% if user.userType == 'admin' %}
+    
+              <ul class="navbar-nav  ">
+                <li class="nav-item">
+                  <a class="nav-link" href="\admin_home">Home <span class="sr-only">(current)</span></a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\admin_add_moderator"> Moderators</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\admin_add_products"> Products</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\admin_vw_reports"> Reports</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\logout"> Logout</a>
+                  </li>
+              </ul>
+
+              {% elif user.userType == 'moderator' %}
+
+              <ul class="navbar-nav  ">
+                <li class="nav-item">
+                  <a class="nav-link" href="\contractor_home">Home <span class="sr-only">(current)</span></a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\admin_add_products"> Products</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\admin_add_products"> Products</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\moderator_vw_enquires"> Enquires</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\logout"> Logout</a>
+                  </li>
+              </ul>
+
+              {% elif user.userType == 'public' %}
+
+              <ul class="navbar-nav  ">
+                <li class="nav-item">
+                  <a class="nav-link" href="\public_home">Home <span class="sr-only">(current)</span></a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\public_update_rofile"> Profile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\public_vw_products"> Products</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\public_vw_cart"> Cart</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\public_vw_history"> History</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\public_enquire"> Enquire</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="\logout"> Logout</a>
+                  </li>
+              </ul>
+
+              {% endif %}
+            {% else %}
+            <ul class="navbar-nav  ">
+              <li class="nav-item">
+                <a class="nav-link" href="\">Home <span class="sr-only">(current)</span></a>
+              </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="\log_in"> Login</a>
+                </li>
+            </ul>
+          {% endif %}
+      
+
+            <!-- <div class="quote_btn-container">
+              <a href="" class="quote_btn">
+                Get A Quote
+              </a>
+            </div> -->
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  

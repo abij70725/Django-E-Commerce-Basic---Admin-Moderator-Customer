@@ -1,0 +1,102 @@
+{% include 'header.html' %}
+
+
+<div class="footer_container">
+  <!-- info section -->
+
+  <section class="info_section ">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 col-lg-6 ">
+          <h4>
+            Bookings
+          </h4>
+          <table class="table table-striped table-bordered table-hover text-center">
+            {% if payments %}
+            <tr>
+                <th>Booking ID</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Customer</th>
+                <th>Products</th>
+            </tr>
+            {% for payment in payments %}
+            <tr>
+              <td>{{payment.booking.id}}</td>
+              <td>{{payment.payment_date}}</td>
+              <td>{{payment.amount}}</td>
+              <td>{{payment.booking.user.name}}</td>
+              <td><button onclick="fetchCartItems(this)" bid="{{payment.booking.id}}" class="btn btn-outline-info rounded-pill">More</button></td>
+            </tr>
+            </a>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="3">No Bookings</td>
+            </tr>
+            {% endif %}
+          </table>
+        </div>
+
+        <div class="col-md-6 col-lg-6 ">
+          <h4>
+            Details
+          </h4>
+          <table class="table table-striped table-bordered table-hover text-center secondtable">
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+            <tr>
+                <td colspan="5">Choose any bookings to view its details</td>
+            </tr>
+          </table>
+        </div>
+
+        
+        
+      </div>
+    </div>
+  </section>
+
+    <!-- end info section -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function fetchCartItems(button) {
+            $.ajax({
+                url: '/fetch_cart_items',  // Adjust the URL to your endpoint
+                type: 'GET',
+                data: {
+                    'booking_id': button.getAttribute('bid')
+                },
+                success: function(response) {
+                    console.log(response);  // Debug the response
+                    console.log("Cart Items Length:", response.cart_items.length);
+
+                    var carts = response.cart_items;
+                    var tableBody = '<tr><th>Product</th><th>Image</th><th>Quantity</th><th>Price</th><th>Total</th></tr>';
+                    for (var i = 0; i < carts.length; i++) {
+                        tableBody += '<tr>';
+                        tableBody += '<td>' + carts[i].product + '</td>';
+                        tableBody += '<td><img src="../static' + carts[i].image + '" alt="" width="100px" height="100px"></td>';
+                        tableBody += '<td>' + carts[i].quantity + '</td>';
+                        tableBody += '<td>' + carts[i].price + '</td>';
+                        tableBody += '<td>' + carts[i].total + '</td>';
+                        tableBody += '</tr>';
+                    }
+                    $('table.secondtable').html(tableBody);
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+    </script>
+
+
+{% include 'foot.html' %}

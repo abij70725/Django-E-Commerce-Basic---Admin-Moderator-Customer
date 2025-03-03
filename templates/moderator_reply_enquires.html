@@ -1,0 +1,154 @@
+{% include 'header.html' %}
+<style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #7335b7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            margin-left: 30%;
+            width: 40%;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            border-bottom: 2px solid #f0f0f0;
+            background-color: #f9f9f9;
+            border-radius: 20px;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .sent {
+            background-color: #7335b7;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .received {
+            background-color: #e5e5e5;
+            color: black;
+            align-self: flex-start;
+        }
+
+        .chat-input-container {
+            display: flex;
+            padding: 10px;
+            background-color: white;
+            border-top: 2px solid #f0f0f0;
+            border-radius: 50px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .send-button {
+            background-color: #7335b7;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .send-button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+            {% for enquiry in previous_enquierys %}
+                {% if enquiry.fromuser == 0 %}
+                    <div class="message sent">{{ enquiry.message }}</div>
+                {% else %}
+                    <div class="message recieved">{{ enquiry.message }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- <div class="chat-input-container"> -->
+            <form action="" method="post" class="chat-input-container">
+                {% csrf_token %}
+                <input type="text" name="enquiry" class="chat-input" id="messageInput" placeholder="Type a message..." required>
+                <button class="send-button" type="submit">Send</button>
+            </form>
+        <!-- </div> -->
+    </div>
+
+
+    <script>
+        function autoScrollUpdate() {
+            var element = document.getElementById("chatBox");
+            element.scrollTop = element.scrollHeight;
+        }
+        autoScrollUpdate();
+        // Function to add message to the chat
+        function addMessage(content, type) {
+            const chatBox = document.getElementById('chatBox');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', type);
+            messageDiv.textContent = content;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Auto scroll to the latest message
+        }
+
+        // Function to send message when Enter is pressed or the Send button is clicked
+        function sendMessage(event) {
+            if (event && event.key !== 'Enter' && event.keyCode !== 13) return;
+
+            const inputField = document.getElementById('messageInput');
+            const message = inputField.value.trim();
+
+            if (message) {
+                addMessage(message, 'sent');
+                inputField.value = '';  // Clear input field
+                simulateReply();
+            }
+        }
+
+        // Simulate a received message after a delay
+        function simulateReply() {
+            setTimeout(() => {
+                const reply = "This is an automated reply!";
+                addMessage(reply, 'received');
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>
